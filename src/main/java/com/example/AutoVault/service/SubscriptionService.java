@@ -66,7 +66,7 @@ public class SubscriptionService {
         return transferToSubscriptionDto(subscriptionSavedLocal);
     }
 
-    private SubscriptionDto transferToSubscriptionDto(Subscription subscription) {
+    public static SubscriptionDto transferToSubscriptionDto(Subscription subscription) {
         SubscriptionDto dto = new SubscriptionDto();
         dto.setId(subscription.getId());
         dto.setPrice(subscription.getPrice());
@@ -74,7 +74,7 @@ public class SubscriptionService {
         return dto;
     }
 
-    private Subscription transferToSubscription(SubscriptionInputDto dto) {
+    public static Subscription transferToSubscription(SubscriptionInputDto dto) {
         Subscription subscription = new Subscription();
         subscription.setPrice(dto.getPrice());
         subscription.setType(dto.getType());

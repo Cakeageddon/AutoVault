@@ -67,4 +67,13 @@ public class Customer {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public List<Car> getCar() {
+        return car;
+    }
+
+    public void setCar(List<Car> car) {
+        this.car = car;
+    }
+
 }

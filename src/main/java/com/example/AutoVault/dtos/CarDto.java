@@ -14,6 +14,9 @@ public class CarDto {
 
     private StorageDto storageDto;
 
+    private CustomerDto customerDto;
+
+
     public Long getId() {
         return id;
     }
@@ -92,5 +95,13 @@ public class CarDto {
 
     public void setStorageDto(StorageDto storageDto) {
         this.storageDto = storageDto;
+    }
+
+    public CustomerDto getCustomerDto() {
+        return customerDto;
+    }
+
+    public void setCustomerDto(CustomerDto customerDto) {
+        this.customerDto = customerDto;
     }
 }

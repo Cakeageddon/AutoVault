@@ -69,7 +69,7 @@ public class CustomerService {
         }
     }
 
-    private CustomerDto transferToCustomerDto(Customer customer) {
+    public static CustomerDto transferToCustomerDto(Customer customer) {
         CustomerDto dto = new CustomerDto();
         dto.setId(customer.getId());
         dto.setName(customer.getName());
@@ -79,7 +79,7 @@ public class CustomerService {
         return dto;
     }
 
-    private Customer transferToCustomer (CustomerInputDto dto) {
+    public static Customer transferToCustomer (CustomerInputDto dto) {
         Customer customer = new Customer();
         customer.setName(dto.getName());
         customer.setAdress(dto.getAddress());

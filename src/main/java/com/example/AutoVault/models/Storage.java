@@ -56,4 +56,12 @@ public class Storage {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 }

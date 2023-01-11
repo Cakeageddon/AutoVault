@@ -66,7 +66,7 @@ public class StorageService {
         }
     }
 
-    private StorageDto transferToStorageDto(Storage storage) {
+    public static StorageDto transferToStorageDto(Storage storage) {
         StorageDto dto = new StorageDto();
         dto.setId(storage.getId());
         dto.setName(storage.getName());
@@ -75,7 +75,7 @@ public class StorageService {
         return dto;
     }
 
-    private Storage transferToStorage(StorageInputDto dto) {
+    public static Storage transferToStorage(StorageInputDto dto) {
         Storage storage = new Storage();
         storage.setName(dto.getName());
         storage.setType(dto.getType());

@@ -4,9 +4,11 @@ import com.example.AutoVault.dtos.CarDto;
 import com.example.AutoVault.dtos.CarInputDto;
 import com.example.AutoVault.exceptions.RecordNotFoundException;
 import com.example.AutoVault.models.Car;
+import com.example.AutoVault.models.Customer;
 import com.example.AutoVault.models.Storage;
 import com.example.AutoVault.models.Subscription;
 import com.example.AutoVault.repositories.CarRepository;
+import com.example.AutoVault.repositories.CustomerRepository;
 import com.example.AutoVault.repositories.StorageRepository;
 import com.example.AutoVault.repositories.SubscriptionRepository;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.AutoVault.service.CustomerService.transferToCustomerDto;
+import static com.example.AutoVault.service.StorageService.transferToStorageDto;
+import static com.example.AutoVault.service.SubscriptionService.transferToSubscriptionDto;
+
 @Service
 public class CarService {
 
@@ -23,11 +29,14 @@ public class CarService {
     SubscriptionRepository subscriptionRepository;
     StorageRepository storageRepository;
 
+    CustomerRepository customerRepository;
 
-    public CarService(CarRepository carRepository, StorageRepository storageRepository, SubscriptionRepository subscriptionRepository) {
+
+    public CarService(CarRepository carRepository, StorageRepository storageRepository, SubscriptionRepository subscriptionRepository, CustomerRepository customerRepository) {
         this.carRepository = carRepository;
         this.storageRepository = storageRepository;
-        this. subscriptionRepository = subscriptionRepository;
+        this.subscriptionRepository = subscriptionRepository;
+        this.customerRepository = customerRepository;
     }
 
     @Transactional
@@ -60,6 +69,20 @@ public class CarService {
             Car car = optionalCar.get();
             Storage storage = optionalStorage.get();
             car.setStorage(storage);
+            carRepository.save(car);
+        }
+    }
+
+    public void assignCustomerToCar(Long carId, Long customerId) {
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+
+        if (optionalCar.isEmpty() && optionalCustomer.isEmpty()) {
+            throw new RecordNotFoundException("No Car/storage subscription combination found. Try different id(s).");
+        } else {
+            Car car = optionalCar.get();
+            Customer customer = optionalCustomer.get();
+            car.setCustomer(customer);
             carRepository.save(car);
         }
     }
@@ -130,6 +153,10 @@ public class CarService {
         dto.setHorsepower(car.getHorsepower());
         dto.setFuelType(car.getFuelType());
         dto.setOilType(car.getOilType());
+        if(car.getStorage() != null) {dto.setStorageDto(transferToStorageDto(car.getStorage()));}
+        if(car.getCustomer() != null) {dto.setCustomerDto(transferToCustomerDto(car.getCustomer()));}
+
+        if(car.getSubscriptions() != null) {dto.setSubscriptionDto(transferToSubscriptionDto((Subscription)car.getSubscriptions()));}
         return dto;
     }
 

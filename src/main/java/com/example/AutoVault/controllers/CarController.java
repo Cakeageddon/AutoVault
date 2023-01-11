@@ -60,4 +60,10 @@ public class CarController {
         carService.assignStorageToCar(carId, storageId);
         return ResponseEntity.ok().body("Added storage with id: " + storageId + " to car with id: " + carId);
     }
+
+    @PutMapping("/cars/{carId}/customer/{customerId}")
+    public ResponseEntity<Object> assignCustomerToCar(@PathVariable Long carId, @PathVariable Long customerId) {
+        carService.assignCustomerToCar(carId, customerId);
+        return ResponseEntity.ok().body("Added customer with id: " + customerId + " to car with id: " + carId);
+    }
 }
