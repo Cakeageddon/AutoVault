@@ -1,9 +1,11 @@
 package com.example.AutoVault.models;
 
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Entity
+
 @Table(name = "car")
 public class Car {
     @Id
@@ -39,8 +41,10 @@ public class Car {
     @JoinColumn(name = "storage_id", referencedColumnName = "id")
     private Storage storage;
 
-    @OneToMany(mappedBy = "car")
-    private List<Subscription> subscriptions;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(indexes = @Index(name = "csno.index" ,columnList = "car_id"), joinColumns =
+    @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "subscripton_id"), name = "car_subscription")
+    private Set<Subscription> subscriptions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -122,11 +126,13 @@ public class Car {
         this.storage = storage;
     }
 
-    public List<Subscription> getSubscriptions() {
+    public Set<Subscription> getSubscriptions() {
         return subscriptions;
     }
 
-    public void setSubscriptions(List<Subscription> subscriptions) {
+    public void setSubscriptions(Set<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
+
+
 }

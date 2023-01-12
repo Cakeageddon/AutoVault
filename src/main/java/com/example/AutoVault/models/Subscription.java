@@ -1,6 +1,9 @@
 package com.example.AutoVault.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "subscription")
@@ -20,9 +23,8 @@ public class Subscription {
         this.type = type;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "subscription_id")
-    private Car car;
+    @ManyToMany(mappedBy = "subscriptions")
+    private Set<Car> car;
 
     public Long getId() {
         return id;
@@ -48,11 +50,11 @@ public class Subscription {
         this.type = type;
     }
 
-    public Car getCar() {
+    public Set<Car> getCar() {
         return car;
     }
 
-    public void setCar(Car car) {
+    public void setCar(Set<Car> car) {
         this.car = car;
     }
 }

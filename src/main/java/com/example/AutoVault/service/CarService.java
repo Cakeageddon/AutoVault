@@ -2,6 +2,7 @@ package com.example.AutoVault.service;
 
 import com.example.AutoVault.dtos.CarDto;
 import com.example.AutoVault.dtos.CarInputDto;
+import com.example.AutoVault.dtos.SubscriptionDto;
 import com.example.AutoVault.exceptions.RecordNotFoundException;
 import com.example.AutoVault.models.Car;
 import com.example.AutoVault.models.Customer;
@@ -11,12 +12,17 @@ import com.example.AutoVault.repositories.CarRepository;
 import com.example.AutoVault.repositories.CustomerRepository;
 import com.example.AutoVault.repositories.StorageRepository;
 import com.example.AutoVault.repositories.SubscriptionRepository;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.collection.internal.PersistentSet;
+import org.springframework.data.annotation.Persistent;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 
 import static com.example.AutoVault.service.CustomerService.transferToCustomerDto;
 import static com.example.AutoVault.service.StorageService.transferToStorageDto;
@@ -39,7 +45,7 @@ public class CarService {
         this.customerRepository = customerRepository;
     }
 
-    @Transactional
+
     public void assignSubscriptionToCar(Long carId, Long subscriptionId) {
         Optional<Car> optionalCar = carRepository.findById(carId);
         Optional<Subscription> optionalSubscription = subscriptionRepository.findById(subscriptionId);
@@ -49,12 +55,14 @@ public class CarService {
             Car car = optionalCar.get();
             Subscription subscription = optionalSubscription.get();
 
-            List<Subscription> subscriptions = car.getSubscriptions();
+            Set<Subscription> subscriptions = car.getSubscriptions();
             subscriptions.add(subscription);
             car.setSubscriptions(subscriptions);
             carRepository.save(car);
 
-            subscription.setCar(car);
+            Set<Car> cars = subscription.getCar();
+            cars.add(car);
+            subscription.setCar(cars);
             subscriptionRepository.save(subscription);
         }
     }
@@ -109,7 +117,6 @@ public class CarService {
 
     public CarDto createCar(CarInputDto car) {
         Car carSavedLocal = carRepository.save(transferToCar(car));
-
         return transferToCarDto(carSavedLocal);
     }
 
@@ -155,8 +162,15 @@ public class CarService {
         dto.setOilType(car.getOilType());
         if(car.getStorage() != null) {dto.setStorageDto(transferToStorageDto(car.getStorage()));}
         if(car.getCustomer() != null) {dto.setCustomerDto(transferToCustomerDto(car.getCustomer()));}
+        if(car.getSubscriptions() != null) {
+            Set<Subscription> allSubscriptions = car.getSubscriptions();
+            List<SubscriptionDto> allSubscriptionsDto = new ArrayList<>();
 
-        if(car.getSubscriptions() != null) {dto.setSubscriptionDto(transferToSubscriptionDto((Subscription)car.getSubscriptions()));}
+            for (Subscription s : allSubscriptions) {
+                allSubscriptionsDto.add(transferToSubscriptionDto(s));
+            }
+            dto.setSubscriptionDto(allSubscriptionsDto);
+        }
         return dto;
     }
 
