@@ -133,6 +133,4 @@ public class Car {
     public void setSubscriptions(Set<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
-
-
 }

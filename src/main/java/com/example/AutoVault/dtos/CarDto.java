@@ -1,6 +1,7 @@
 package com.example.AutoVault.dtos;
 
 import java.util.List;
+import java.util.Set;
 
 public class CarDto {
     private Long id;
@@ -12,7 +13,7 @@ public class CarDto {
     private String fuelType;
     private String oilType;
 
-    private List<SubscriptionDto> subscriptionDto;
+    private Set<SubscriptionDto> subscriptionDto;
 
     private StorageDto storageDto;
 
@@ -83,11 +84,11 @@ public class CarDto {
         this.oilType = oilType;
     }
 
-    public List<SubscriptionDto> getSubscriptionDto() {
+    public Set<SubscriptionDto> getSubscriptionDto() {
         return subscriptionDto;
     }
 
-    public void setSubscriptionDto(List<SubscriptionDto> subscriptionDto) {
+    public void setSubscriptionDto(Set<SubscriptionDto> subscriptionDto) {
         this.subscriptionDto = subscriptionDto;
     }
 

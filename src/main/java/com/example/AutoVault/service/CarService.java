@@ -12,16 +12,12 @@ import com.example.AutoVault.repositories.CarRepository;
 import com.example.AutoVault.repositories.CustomerRepository;
 import com.example.AutoVault.repositories.StorageRepository;
 import com.example.AutoVault.repositories.SubscriptionRepository;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.collection.internal.PersistentSet;
-import org.springframework.data.annotation.Persistent;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 import static com.example.AutoVault.service.CustomerService.transferToCustomerDto;
@@ -164,7 +160,7 @@ public class CarService {
         if(car.getCustomer() != null) {dto.setCustomerDto(transferToCustomerDto(car.getCustomer()));}
         if(car.getSubscriptions() != null) {
             Set<Subscription> allSubscriptions = car.getSubscriptions();
-            List<SubscriptionDto> allSubscriptionsDto = new ArrayList<>();
+            Set<SubscriptionDto> allSubscriptionsDto = new HashSet<>();
 
             for (Subscription s : allSubscriptions) {
                 allSubscriptionsDto.add(transferToSubscriptionDto(s));
