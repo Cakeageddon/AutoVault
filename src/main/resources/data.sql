@@ -25,9 +25,9 @@ VALUES (2000, 'Basic', 'Onverwarmd', 150),
 INSERT INTO customer(id, name, address, date_of_birth, gender)
 VALUES (3000, 'Stefan Stefansson', 'Monopolylaan 12, Amersfoort, 6421AK', '2000-11-11', 'M'),
        (3001, 'Stefanie Stef', 'Laan van Puntenburg 120, Utrecht, 4455BK', '1980-12-01', 'F'),
-       (3002, 'Collin van Leeuwen', 'Stationsstraat 27, Nuth, 6368CZ', '1995-02-19', 'M'),
+       (3002, 'Collin van Leeuw', 'Horizonstraat 27, Nuth, 7368CZ', '1995-02-19', 'M'),
        (3003, 'Swel Leeuws', 'Nolenlaan 634, Bussum, 6146HA', '1975-02-17', 'F'),
-       (3004, 'Jan Döner"', 'Wellerlaan 109, Heerle, 2896XZ', '1992-07-14', 'M'),
+       (3004, 'Jan Döner', 'Wellerlaan 109, Heerle, 2896XZ', '1992-07-14', 'M'),
        (3005, 'Thirza Gaar', 'Humorstraat 1, Rotterdam, 9876JK', '1995-04-01', 'F'),
        (3006, 'Melvin Motzkussen', 'Monsigneur Nolstraat, Roermond, 8752VC', '1996-08-15', 'M'),
        (3007, 'Niek Willemijns', 'Jozefstraat 2, Nus, 3554AP', '1964-09-12', 'F'),
@@ -42,5 +42,6 @@ VALUES (4000, 10, 'Druppellader'),
        (4004, 50, 'Controle'),
        (4005, 55, 'Oliewissel');
 
-
+INSERT INTO roles(rolename)
+VALUES ('user'), ('admin');
 
