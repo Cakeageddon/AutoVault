@@ -67,7 +67,7 @@ public class CarService {
         Optional<Car> optionalCar = carRepository.findById(carId);
         Optional<Storage> optionalStorage = storageRepository.findById(storageId);
 
-        if (optionalCar.isEmpty() && optionalStorage.isEmpty()) {
+        if (optionalCar.isEmpty() || optionalStorage.isEmpty()) {
             throw new RecordNotFoundException("No Car/storage subscription combination found. Try different id(s).");
         } else {
             Car car = optionalCar.get();
@@ -81,7 +81,7 @@ public class CarService {
         Optional<Car> optionalCar = carRepository.findById(carId);
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
 
-        if (optionalCar.isEmpty() && optionalCustomer.isEmpty()) {
+        if (optionalCar.isEmpty() || optionalCustomer.isEmpty()) {
             throw new RecordNotFoundException("No Car/storage subscription combination found. Try different id(s).");
         } else {
             Car car = optionalCar.get();

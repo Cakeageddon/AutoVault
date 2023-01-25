@@ -50,6 +50,19 @@ public class Car {
     @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "subscripton_id"), name = "car_subscription")
     private Set<Subscription> subscriptions = new HashSet<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Objects.equals(licensePlate, car.licensePlate) && Objects.equals(serialNumber, car.serialNumber) && Objects.equals(make, car.make) && Objects.equals(type, car.type) && Objects.equals(horsepower, car.horsepower) && Objects.equals(fuelType, car.fuelType) && Objects.equals(oilType, car.oilType) && Objects.equals(customer, car.customer) && Objects.equals(storage, car.storage) && Objects.equals(subscriptions, car.subscriptions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(licensePlate, serialNumber, make, type, horsepower, fuelType, oilType, customer, storage, subscriptions);
+    }
+
     public Long getId() {
         return id;
     }
