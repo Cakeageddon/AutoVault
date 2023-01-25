@@ -6,7 +6,7 @@ public class CustomerInputDto {
     private Long id;
     private String name;
     private String address;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String gender;
 
     public Long getId() {
@@ -33,11 +33,11 @@ public class CustomerInputDto {
         this.address = address;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

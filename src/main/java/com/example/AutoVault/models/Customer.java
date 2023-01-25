@@ -1,7 +1,7 @@
 package com.example.AutoVault.models;
 
 import javax.persistence.*;
-import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -12,13 +12,13 @@ public class Customer {
     private Long id;
     private String name;
     private String address;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String gender;
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String adress, Long amountOfCars, Date dateOfBirth, String gender){
+    public Customer(Long id, String name, String adress, String dateOfBirth, String gender){
         this.id = id;
         this.address = adress;
         this.dateOfBirth = dateOfBirth;
@@ -52,11 +52,11 @@ public class Customer {
         this.address = adress;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -144,9 +144,7 @@ public class CarService {
         }
     }
 
-
-
-    private CarDto transferToCarDto(Car car) {
+    public CarDto transferToCarDto(Car car) {
         CarDto dto = new CarDto();
         dto.setId(car.getId());
         dto.setLicensePlate(car.getLicensePlate());
@@ -169,6 +167,7 @@ public class CarService {
         }
         return dto;
     }
+
 
     private Car transferToCar(CarInputDto dto) {
         Car car = new Car();
