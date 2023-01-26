@@ -9,6 +9,17 @@ public class CustomerDto {
     private String dateOfBirth;
     private String gender;
 
+    public CustomerDto() {
+    }
+
+    public CustomerDto(Long id, String name, String address, String dateOfBirth, String gender) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+    }
+
     public Long getId() {
         return id;
     }

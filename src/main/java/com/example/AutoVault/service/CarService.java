@@ -45,19 +45,30 @@ public class CarService {
     public void assignSubscriptionToCar(Long carId, Long subscriptionId) {
         Optional<Car> optionalCar = carRepository.findById(carId);
         Optional<Subscription> optionalSubscription = subscriptionRepository.findById(subscriptionId);
-        if (optionalCar.isEmpty() && optionalSubscription.isEmpty()) {
+        if (optionalCar.isEmpty() || optionalSubscription.isEmpty()) {
             throw new RecordNotFoundException("No car/subscription combination found. Try different id(s).");
         } else {
             Car car = optionalCar.get();
             Subscription subscription = optionalSubscription.get();
 
             Set<Subscription> subscriptions = car.getSubscriptions();
-            if (subscriptions != null) {subscriptions.add(subscription);}
+            if (subscriptions != null) {
+                subscriptions.add(subscription);
+            } else {
+                subscriptions = new HashSet<>();
+                subscriptions.add(subscription);
+            }
+
             car.setSubscriptions(subscriptions);
             carRepository.save(car);
 
             Set<Car> cars = subscription.getCar();
-            if (cars != null) cars.add(car);
+            if (cars != null) {
+                cars.add(car);
+            } else {
+                cars = new HashSet<>();
+                cars.add(car);
+            }
             subscription.setCar(cars);
             subscriptionRepository.save(subscription);
         }

@@ -92,6 +92,13 @@ class CarServiceTest {
     }
 
     @Test
+    void assignSubscriptionToCarExceptionTest() {
+        assertThrows(RecordNotFoundException.class, () -> carService.assignSubscriptionToCar(1L, 1001L));
+        assertThrows(RecordNotFoundException.class, () -> carService.assignSubscriptionToCar(8L, 1000L));
+        assertThrows(RecordNotFoundException.class, () -> carService.assignSubscriptionToCar(8L, 1001L));
+    }
+
+    @Test
     void assignStorageToCar() {
         when(carRepository.findById(3L)).thenReturn(Optional.of(car3));
         when(storageRepository.findById(300L)).thenReturn(Optional.of(storage3));
