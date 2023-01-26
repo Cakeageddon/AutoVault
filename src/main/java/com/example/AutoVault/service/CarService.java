@@ -52,12 +52,12 @@ public class CarService {
             Subscription subscription = optionalSubscription.get();
 
             Set<Subscription> subscriptions = car.getSubscriptions();
-            subscriptions.add(subscription);
+            if (subscriptions != null) {subscriptions.add(subscription);}
             car.setSubscriptions(subscriptions);
             carRepository.save(car);
 
             Set<Car> cars = subscription.getCar();
-            cars.add(car);
+            if (cars != null) cars.add(car);
             subscription.setCar(cars);
             subscriptionRepository.save(subscription);
         }
@@ -68,7 +68,7 @@ public class CarService {
         Optional<Storage> optionalStorage = storageRepository.findById(storageId);
 
         if (optionalCar.isEmpty() || optionalStorage.isEmpty()) {
-            throw new RecordNotFoundException("No Car/storage subscription combination found. Try different id(s).");
+            throw new RecordNotFoundException("No Car/storage combination found. Try different id(s).");
         } else {
             Car car = optionalCar.get();
             Storage storage = optionalStorage.get();

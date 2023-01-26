@@ -3,6 +3,7 @@ package com.example.AutoVault.models;
 import javax.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "customer")
@@ -27,6 +28,19 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Car> car;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return name.equals(customer.name) && address.equals(customer.address) && dateOfBirth.equals(customer.dateOfBirth) && gender.equals(customer.gender) && car.equals(customer.car);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, address, dateOfBirth, gender, car);
+    }
 
     public Long getId() {
         return id;
