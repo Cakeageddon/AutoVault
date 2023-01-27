@@ -63,9 +63,7 @@ public class CarService {
             carRepository.save(car);
 
             Set<Car> cars = subscription.getCar();
-            if (cars != null) {
-                cars.add(car);
-            } else {
+            if (cars == null) {
                 cars = new HashSet<>();
                 cars.add(car);
             }

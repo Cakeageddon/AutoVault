@@ -24,6 +24,7 @@ public class Customer {
         this.address = adress;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+        this.name = name;
     }
 
     @OneToMany(mappedBy = "customer")

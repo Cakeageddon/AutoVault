@@ -57,14 +57,11 @@ class CarServiceTest {
     Storage storage3;
     Subscription subscription1;
     Subscription subscription2;
-    Set<Subscription> subscriptions3;
+    HashSet<Subscription> subscriptions3;
 
     @BeforeEach
     void setUp() {
-        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, (Set<Subscription>) subscription1);
-        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, (Set<Subscription>) subscription2);
-        car3 = new Car(3L, "EE-44-FF", "654fgh321", "Fiat", "500", 22L, "Benzine", "10w30", null,null, null);
-        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,null, subscriptions3);
+
         customer1 = new Customer(10L, "Henk", "Toverlaan 100", "19-01-1993", "Man");
         customer2 = new Customer(20L, "Johannes", "Mariusstraat 12", "27-02-1975", "Vrouw");
         storage1 = new Storage(100L, "Basic", "Onverwarmd", 150);
@@ -72,24 +69,26 @@ class CarServiceTest {
         storage3 = new Storage(300L, "Basic+", "Climate control", 225);
         subscription1 = new Subscription(1000L, 10.0, "Druppellader");
         subscription2 = new Subscription(2000L, 20.0, "Ventilator");
-        subscriptions3 = new HashSet<Subscription>() {{
-            add(subscription1);
-            add(subscription2);
-        }};
+        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, Set.of(subscription1,subscription2));
+        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, subscriptions3);
+        car3 = new Car(3L, "EE-44-FF", "654fgh321", "Fiat", "500", 22L, "Benzine", "10w30");
+        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,null, null);
     }
 
     @Test
     void assignSubscriptionToCar() {
-        when(carRepository.findById(1L)).thenReturn(Optional.of(car1));
+        when(carRepository.findById(2L)).thenReturn(Optional.of(car2));
         when(subscriptionRepository.findById(2000L)).thenReturn(Optional.of(subscription2));
+        when(subscriptionRepository.findById(1000L)).thenReturn(Optional.of(subscription1));
+        carService.assignSubscriptionToCar(2L, 1000L);
+        carService.assignSubscriptionToCar(2L, 2000L);
 
-        carService.assignSubscriptionToCar(1L, 2000L);
-
-        verify(carRepository, times(1)).save(captor.capture());
+        verify(carRepository, times(2)).save(captor.capture());
         Car car = captor.getValue();
-
-        assertEquals(car.getSubscriptions(), car1.getSubscriptions());
+        System.out.println(car2.getSubscriptions());
+        assertEquals(car.getSubscriptions(), car2.getSubscriptions());
     }
+
 
     @Test
     void assignSubscriptionToCarExceptionTest() {
@@ -149,10 +148,10 @@ class CarServiceTest {
 
     @Test
     void getOneCar() {
-        when(carRepository.findById(4L)).thenReturn(Optional.of(car4));
-        CarDto car1Dto = carService.transferToCarDto(car4);
+        when(carRepository.findById(1L)).thenReturn(Optional.of(car1));
+        CarDto car1Dto = carService.transferToCarDto(car1);
 
-        CarDto dto = carService.getOneCar(4L);
+        CarDto dto = carService.getOneCar(1L);
 
         assertEquals(car1Dto.getSubscriptionDto(), dto.getSubscriptionDto());
     }

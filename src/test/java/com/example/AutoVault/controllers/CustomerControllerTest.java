@@ -13,29 +13,33 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc(addFilters = false)
+@WebMvcTest(CustomerController.class)
 @ActiveProfiles("test")
-@ExtendWith(MockitoExtension.class)
 class CustomerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    @InjectMocks
+    @MockBean
     private CustomerService customerService;
 
-    @Autowired
-    @Mock
-    private CustomerRepository customerRepository;
+//    @Autowired
+//    @Mock
+//    private CustomerRepository customerRepository;
 
     Customer customer1;
     Customer customer2;
@@ -45,20 +49,22 @@ class CustomerControllerTest {
 
     @BeforeEach
     public void setUp() {
-        if (customerRepository.count() > 0) {
-            customerRepository.deleteAll();
-        }
+//        if (customerRepository.count() > 0) {
+//            customerRepository.deleteAll();
+//        }
         customer1 = new Customer(1L, "Henk", "Toverlaan 100", "19-01-1993", "Man");
         customer2 = new Customer(2L, "Johannes", "Mariusstraat 12", "27-02-1975", "Vrouw");
         customerInputDto1 = new CustomerInputDto(3L, "Beppie", "Kampwagen 5", "14-08-1966", "Vrouw");
         customer1Dto = new CustomerDto(1L, "Henk", "Toverlaan 100", "19-01-1993", "Man");
         customer2Dto = new CustomerDto(2L, "Johannes", "Mariusstraat 12", "27-02-1975", "Vrouw");
-        customerRepository.save(customer1);
-        customerRepository.save(customer2);
+//        customer1 = customerRepository.save(customer1);
+//        customer2 = customerRepository.save(customer2);
     }
 
     @Test
     void getAllCustomers() throws Exception {
+        given(customerService.getAllCustomers()).willReturn(List.of(customer1Dto, customer2Dto));
+
         mockMvc.perform(get("/customers"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(customer1Dto.getId().toString()))
@@ -66,7 +72,7 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$[0].adress").value("Toverlaan 100"))
                 .andExpect(jsonPath("$[0].dateOfBirth").value("19-01-1993"))
                 .andExpect(jsonPath("$[0].gender").value("Man"))
-                .andExpect(jsonPath("$[1].id").value(customer2.getId().toString()))
+                .andExpect(jsonPath("$[1].id").value(customer2Dto.getId().toString()))
                 .andExpect(jsonPath("$[1].name").value("Johannes"))
                 .andExpect(jsonPath("$[1].adress").value("Mariusstraat 12"))
                 .andExpect(jsonPath("$[1].dateOfBirth").value("27-02-1975"))

@@ -37,6 +37,17 @@ public class Car {
         this.subscriptions = subscriptions;
     }
 
+    public Car(Long id, String licensePlate, String serialNumber, String make, String type, Long horsepower, String fuelType, String oilType) {
+        this.id = id;
+        this.licensePlate = licensePlate;
+        this.serialNumber = serialNumber;
+        this.make = make;
+        this.type = type;
+        this.horsepower = horsepower;
+        this.fuelType = fuelType;
+        this.oilType = oilType;
+    }
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -46,7 +57,7 @@ public class Car {
     private Storage storage;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(indexes = @Index(name = "csno.index", columnList = "car_id"), joinColumns =
+    @JoinTable( joinColumns =
     @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "subscripton_id"), name = "car_subscription")
     private Set<Subscription> subscriptions = new HashSet<>();
 
