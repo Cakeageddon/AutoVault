@@ -1,6 +1,8 @@
 package com.example.AutoVault.models;
 
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -23,7 +25,7 @@ public class Car {
     }
 
     public Car(Long id, String licensePlate, String serialNumber, String make, String type, Long horsepower,
-               String fuelType, String oilType, Customer customer, Storage storage, Set<Subscription> subscriptions) {
+               String fuelType, String oilType, Customer customer, Storage storage, Set<Subscription> subscriptions, DocFile docFile) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.serialNumber = serialNumber;
@@ -35,6 +37,7 @@ public class Car {
         this.customer = customer;
         this.storage = storage;
         this.subscriptions = subscriptions;
+        this.docFile = docFile;
     }
 
     public Car(Long id, String licensePlate, String serialNumber, String make, String type, Long horsepower, String fuelType, String oilType) {
@@ -61,17 +64,33 @@ public class Car {
     @JoinColumn(name = "car_id"), inverseJoinColumns = @JoinColumn(name = "subscripton_id"), name = "car_subscription")
     private Set<Subscription> subscriptions = new HashSet<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "docfile_id", referencedColumnName = "id")
+    @Nullable
+    private DocFile docFile;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return Objects.equals(licensePlate, car.licensePlate) && Objects.equals(serialNumber, car.serialNumber) && Objects.equals(make, car.make) && Objects.equals(type, car.type) && Objects.equals(horsepower, car.horsepower) && Objects.equals(fuelType, car.fuelType) && Objects.equals(oilType, car.oilType) && Objects.equals(customer, car.customer) && Objects.equals(storage, car.storage) && Objects.equals(subscriptions, car.subscriptions);
+        return Objects.equals(
+                licensePlate, car.licensePlate) &&
+                Objects.equals(serialNumber, car.serialNumber) &&
+                Objects.equals(make, car.make) &&
+                Objects.equals(type, car.type) &&
+                Objects.equals(horsepower, car.horsepower) &&
+                Objects.equals(fuelType, car.fuelType) &&
+                Objects.equals(oilType, car.oilType) &&
+                Objects.equals(customer, car.customer) &&
+                Objects.equals(storage, car.storage) &&
+                Objects.equals(subscriptions, car.subscriptions) &&
+                Objects.equals(docFile, car.docFile);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(licensePlate, serialNumber, make, type, horsepower, fuelType, oilType, customer, storage, subscriptions);
+        return Objects.hash(licensePlate, serialNumber, make, type, horsepower, fuelType, oilType, customer, storage, subscriptions, docFile);
     }
 
     public Long getId() {
@@ -160,5 +179,14 @@ public class Car {
 
     public void setSubscriptions(Set<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    @Nullable
+    public DocFile getDocFile() {
+        return docFile;
+    }
+
+    public void setDocFile(@Nullable DocFile docFile) {
+        this.docFile = docFile;
     }
 }
