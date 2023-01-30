@@ -13,12 +13,9 @@ import com.example.AutoVault.repositories.CustomerRepository;
 import com.example.AutoVault.repositories.StorageRepository;
 import com.example.AutoVault.repositories.SubscriptionRepository;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import org.springframework.stereotype.Service;
 
-
 import java.util.*;
-
 
 import static com.example.AutoVault.service.CustomerService.transferToCustomerDto;
 import static com.example.AutoVault.service.StorageService.transferToStorageDto;

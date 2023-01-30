@@ -1,4 +1,4 @@
-package com.example.AutoVault.security;
+package com.example.AutoVault.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

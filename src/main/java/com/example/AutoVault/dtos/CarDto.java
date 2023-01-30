@@ -1,6 +1,5 @@
 package com.example.AutoVault.dtos;
 
-import java.util.List;
 import java.util.Set;
 
 public class CarDto {
