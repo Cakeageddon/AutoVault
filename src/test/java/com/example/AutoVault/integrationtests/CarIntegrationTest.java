@@ -84,10 +84,10 @@ public class CarIntegrationTest {
         subscription1 = subscriptionRepository.save(subscription1);
         subscription2 = subscriptionRepository.save(subscription2);
 
-        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, Set.of(subscription1,subscription2));
-        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, Set.of(subscription2));
+        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, Set.of(subscription1,subscription2), null);
+        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, Set.of(subscription2), null);
         car3 = new Car(3L, "EE-44-FF", "654fgh321", "Fiat", "500", 22L, "Benzine", "10w30");
-        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,storage3, Set.of(subscription1));
+        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,storage3, Set.of(subscription1), null);
         car1 = carRepository.save(car1);
         car2 = carRepository.save(car2);
         car3 = carRepository.save(car3);

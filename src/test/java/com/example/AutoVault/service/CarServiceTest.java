@@ -69,10 +69,10 @@ class CarServiceTest {
         storage3 = new Storage(300L, "Basic+", "Climate control", 225);
         subscription1 = new Subscription(1000L, 10.0, "Druppellader");
         subscription2 = new Subscription(2000L, 20.0, "Ventilator");
-        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, Set.of(subscription1,subscription2));
-        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, subscriptions3);
+        car1 = new Car(1L, "AA-12-BB", "123AB", "Ford", "Mk1", 2L, "Stoom", "50w50", customer1, storage1, Set.of(subscription1,subscription2), null);
+        car2 = new Car(2L, "CC-33-DD", "987654ABC", "Mercedes", "Benz1", 12L, "Benzeen", "Walvisolie", customer2, storage2, subscriptions3, null);
         car3 = new Car(3L, "EE-44-FF", "654fgh321", "Fiat", "500", 22L, "Benzine", "10w30");
-        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,null, null);
+        car4 = new Car(4L, "GG-55-HH", "21365465", "Toyota", "Trueno", 180L, "Benzine", "10w30", customer1,null, null, null);
     }
 
     @Test
@@ -182,7 +182,7 @@ class CarServiceTest {
     @Test
     void updateCar() {
         CarInputDto carInputDto = new CarInputDto(5L, "6-AHF-32", "654as978q", "Ford", "Focus", 143L, "Diesel", "10w40");
-        Car car3 = new Car(5L, "6-AHF-32", "654as978q", "Ford", "Focus", 143L, "Diesel", "10w40", null, null, null);
+        Car car3 = new Car(5L, "6-AHF-32", "654as978q", "Ford", "Focus", 143L, "Diesel", "10w40", null, null, null, null);
         when(carRepository.findById(1L)).thenReturn(Optional.of(car1));
         when(carRepository.save(any())).thenReturn(car3);
 

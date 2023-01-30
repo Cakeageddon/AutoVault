@@ -1,11 +1,11 @@
 package com.example.AutoVault.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "docfile")
 public class DocFile {
 
     @Id
@@ -15,7 +15,22 @@ public class DocFile {
     private String fileName;
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] docFile;
+
+    public DocFile() {
+    }
+    public DocFile(Long id, String fileName, byte[] docFile, Car car) {
+        this.id = id;
+        this.fileName = fileName;
+        this.docFile = docFile;
+        this.car = car;
+    }
+
+    @OneToOne(mappedBy = "docFile")
+    private Car car;
+
+
 
 
     public String getFileName() {
@@ -32,5 +47,21 @@ public class DocFile {
 
     public void setDocFile(byte[] docFile) {
         this.docFile = docFile;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }
