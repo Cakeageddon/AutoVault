@@ -50,9 +50,24 @@ public class SecurityConfig {
         http
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
+
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers("/**").hasAnyAuthority("user", "admin")
+
+                .antMatchers(HttpMethod.GET, "/cars").hasAnyAuthority("user", "admin")
+                .antMatchers(HttpMethod.GET, "/cars/**").hasAnyAuthority("user", "admin")
+
+                .antMatchers(HttpMethod.GET, "/storage").hasAnyAuthority("user", "admin")
+                .antMatchers(HttpMethod.GET, "/storage/**").hasAnyAuthority("user", "admin")
+
+                .antMatchers(HttpMethod.GET, "/subscription").hasAnyAuthority("user", "admin")
+                .antMatchers(HttpMethod.GET, "/subscription/**").hasAnyAuthority("user", "admin")
+
+                .antMatchers("/cars/upload").hasAnyAuthority("user", "admin")
+                .antMatchers("/downloadFromDB/**").hasAnyAuthority("user", "admin")
+
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+
+                .antMatchers("/**").hasAuthority("admin")
                 .and()
                 .addFilterBefore(new JwtRequestFilter(userDetailsService(), jwtService), UsernamePasswordAuthenticationFilter.class)
                 .csrf().disable()
