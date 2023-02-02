@@ -21,13 +21,13 @@ import static com.example.AutoVault.service.CustomerService.transferToCustomerDt
 import static com.example.AutoVault.service.StorageService.transferToStorageDto;
 import static com.example.AutoVault.service.SubscriptionService.transferToSubscriptionDto;
 
+@SuppressWarnings("DuplicatedCode")
 @Service
 public class CarService {
 
     CarRepository carRepository;
     SubscriptionRepository subscriptionRepository;
     StorageRepository storageRepository;
-
     CustomerRepository customerRepository;
 
 
@@ -171,6 +171,7 @@ public class CarService {
             }
             dto.setSubscriptionDto(allSubscriptionsDto);
         }
+        if(car.getDocFile() != null) {dto.setDocFileDtoId(car.getDocFile().getFileName());}
         return dto;
     }
 

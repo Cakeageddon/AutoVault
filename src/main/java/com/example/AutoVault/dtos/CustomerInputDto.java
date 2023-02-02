@@ -1,7 +1,5 @@
 package com.example.AutoVault.dtos;
 
-import java.util.Date;
-
 public class CustomerInputDto {
     private Long id;
     private String name;

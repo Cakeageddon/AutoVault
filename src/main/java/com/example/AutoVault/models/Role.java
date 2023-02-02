@@ -6,6 +6,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "roles")
 public class Role {

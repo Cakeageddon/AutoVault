@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "customer")
 public class Customer {

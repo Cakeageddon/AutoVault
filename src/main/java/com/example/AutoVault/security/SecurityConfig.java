@@ -52,7 +52,6 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
-                .antMatchers("/secret").hasAuthority("admin")
                 .antMatchers("/**").hasAnyAuthority("user", "admin")
                 .and()
                 .addFilterBefore(new JwtRequestFilter(userDetailsService(), jwtService), UsernamePasswordAuthenticationFilter.class)

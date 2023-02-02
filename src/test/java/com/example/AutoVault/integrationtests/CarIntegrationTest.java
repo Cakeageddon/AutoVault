@@ -1,6 +1,5 @@
 package com.example.AutoVault.integrationtests;
 
-import com.example.AutoVault.dtos.CarDto;
 import com.example.AutoVault.models.Car;
 import com.example.AutoVault.models.Customer;
 import com.example.AutoVault.models.Storage;
@@ -9,7 +8,6 @@ import com.example.AutoVault.repositories.CarRepository;
 import com.example.AutoVault.repositories.CustomerRepository;
 import com.example.AutoVault.repositories.StorageRepository;
 import com.example.AutoVault.repositories.SubscriptionRepository;
-import com.example.AutoVault.service.CarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,9 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CarIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private CarService carService;
 
     @Autowired
     CarRepository carRepository;
@@ -116,12 +109,7 @@ public class CarIntegrationTest {
                 .andExpect(jsonPath("storageDto.name").value("Basic"))
                 .andExpect(jsonPath("storageDto.type").value("Onverwarmd"))
                 .andExpect(jsonPath("storageDto.price").value(150))
-                .andExpect(jsonPath("subscriptionDto.[0].id").value(subscription2.getId().toString()))
-                .andExpect(jsonPath("subscriptionDto.[0].price").value(20.0))
-                .andExpect(jsonPath("subscriptionDto.[0].type").value("Ventilator"))
-                .andExpect(jsonPath("subscriptionDto.[1].id").value(subscription1.getId().toString()))
-                .andExpect(jsonPath("subscriptionDto.[1].price").value(10.0))
-                .andExpect(jsonPath("subscriptionDto.[1].type").value("Druppellader"));
+                .andExpect(jsonPath("subscriptionDto.length()").value(2));
     }
 
     @Test

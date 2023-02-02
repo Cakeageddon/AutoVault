@@ -1,5 +1,6 @@
 package com.example.AutoVault.service;
 
+import com.example.AutoVault.dtos.DocFileDto;
 import com.example.AutoVault.exceptions.RecordNotFoundException;
 import com.example.AutoVault.models.Car;
 import com.example.AutoVault.models.DocFile;
@@ -55,5 +56,13 @@ public class DocFileService {
             car.setDocFile(docFile);
             carRepository.save(car);
         }
+    }
+
+    public static DocFileDto transferToDocFileDto(DocFile docFile) {
+        DocFileDto dto = new DocFileDto();
+        dto.setId(docFile.getId());
+        dto.setFileName(docFile.getFileName());
+        dto.setDocFile(docFile.getDocFile());
+        return dto;
     }
 }

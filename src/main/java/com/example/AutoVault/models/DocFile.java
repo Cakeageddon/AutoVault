@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "docfile")
 public class DocFile {

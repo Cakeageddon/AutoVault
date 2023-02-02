@@ -3,6 +3,7 @@ package com.example.AutoVault.models;
 import javax.persistence.*;
 import java.util.Collection;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(name = "users")
 public class User {

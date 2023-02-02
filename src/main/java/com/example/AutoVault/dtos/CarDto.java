@@ -12,6 +12,7 @@ public class CarDto {
     private String fuelType;
     private String oilType;
 
+    private String docFileDtoFilename;
     private Set<SubscriptionDto> subscriptionDto;
 
     private StorageDto storageDto;
@@ -107,5 +108,13 @@ public class CarDto {
 
     public void setCustomerDto(CustomerDto customerDto) {
         this.customerDto = customerDto;
+    }
+
+    public String getDocFileDtoFilename() {
+        return docFileDtoFilename;
+    }
+
+    public void setDocFileDtoId(String docFileDtoFilename) {
+        this.docFileDtoFilename = docFileDtoFilename;
     }
 }
